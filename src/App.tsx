@@ -17,7 +17,7 @@ function App() {
   }, []);
 
   function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
+    client.models.Todo.create({ content: window.prompt("Todo content"), deadline: window.prompt("deadline(YYYY-MM-DD)") });
   }
 
   function deleteTodo(id: string) {
@@ -33,7 +33,7 @@ function App() {
           <li 
             key={todo.id}
             onClick={() => deleteTodo(todo.id)}
-          >{todo.content}</li>
+          >{todo.content} by{todo.deadline}</li>
         ))}
       </ul>
       <div>
