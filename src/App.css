@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+.todoText {
+  margin-left: 4px;
+  font-size: 24px;
+}
+
+.childrenBtn {
+  margin: 8px;
+}
