@@ -13,7 +13,7 @@ const schema = a.schema({
       deadline: a.date(),
       todoId: a.id(),
       todo: a.belongsTo('Todo', 'todoId'),
-  }),
+  }).authorization((allow) => [allow.owner()]),
 
   Todo: a
     .model({
