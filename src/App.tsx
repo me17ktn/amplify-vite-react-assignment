@@ -79,7 +79,7 @@ function App() {
           <div key={todo.id}>
             <input type="checkbox" onChange={() => deleteTodo(todo.id)} />
             <span className="todoText">{todo.content}  by {todo.deadline}</span>
-            <button className="childrenBtn" onClick={() => createChild(todo.id)}>子タスク</button>
+            <button className="childrenBtn" onClick={() => createChild(todo.id)}>+ child task</button>
             {children.map((child) => (
               child.todoId === todo.id ?
               <div key={child.id} className="children">

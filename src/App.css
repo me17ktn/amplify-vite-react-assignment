@@ -55,10 +55,12 @@
   font-size: 16px;
   align-items: center;
   justify-content: end;
+  margin-top: 4px;
 }
 
 .uploader {
   width: 200px;
+  height: 30px;
   margin-left: 20px;
   display: flex;
 }
