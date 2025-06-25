@@ -15,7 +15,6 @@ function App() {
   const [date, setDate] = useState("");
   const [file, setFile] = useState<File | undefined>();
   const [fetchedFiles, setFetchedFiles] = useState<any[]>([]);
-  const [seed, setSeed] = useState(1);
   const { user, signOut } = useAuthenticator();
   
   
