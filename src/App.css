@@ -49,3 +49,38 @@
 .childrenBtn {
   margin: 8px;
 }
+
+.children {
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+  justify-content: end;
+}
+
+.uploader {
+  width: 200px;
+  margin-left: 20px;
+  display: flex;
+}
+
+.uploadLabel {
+  color: white;
+  background-color: black;
+  width: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#uploadFile {
+  display: none;
+}
+
+.uploadBtn {
+  width: 40px;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

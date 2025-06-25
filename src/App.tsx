@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { uploadData } from 'aws-amplify/storage'
 import "./App.css"
 
 const client = generateClient<Schema>();
@@ -11,6 +12,7 @@ function App() {
   const [children, setChildren] = useState<Array<Schema["Children"]["type"]>>([]);
   const [text, setText] = useState("")
   const [date, setDate] = useState("");
+  const [file, setFile] = useState<File | undefined>();
   const { user, signOut } = useAuthenticator();
   
   
@@ -48,7 +50,23 @@ function App() {
   const handleChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
   }
+
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if(files) {
+      setFile(files[0]);
+    };
+  }
   
+  const handleClick = () => {
+    if (!file) {
+      return;
+    }
+    uploadData({
+      path: `photos/${file.name}`,
+      data: file,
+    });
+  };
 
   return (
     <main>
@@ -63,10 +81,19 @@ function App() {
             <span className="todoText">{todo.content}  by {todo.deadline}</span>
             <button className="childrenBtn" onClick={() => createChild(todo.id)}>子タスク</button>
             {children.map((child) => (
-            <div key={child.id}>
-              <input type="checkbox" onChange={() => deleteChild(child.id)} />
-              <span className="todoText">{child.content}  by {child.deadline}</span>
+              child.todoId === todo.id ?
+              <div key={child.id} className="children">
+                <div>
+                  <input type="checkbox" onChange={() => deleteChild(child.id)} />
+                  <span>{child.content}  by {child.deadline}</span>
+                </div>
+                <div className="uploader">
+                  <label htmlFor="uploadFile" className="uploadLabel">Img</label>
+                  <input type="file" id="uploadFile" onChange={handleChangeFile} />
+                  <button className="uploadBtn" onClick={handleClick}>Up</button>
+                </div>
             </div>
+            : ""
             ))}
           </div>
         ))}
