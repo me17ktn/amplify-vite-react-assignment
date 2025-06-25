@@ -46,6 +46,25 @@
   font-size: 24px;
 }
 
+.uploadImg {
+  display: flex;
+  flex-direction: column;
+}
+
+.uploadLabel {
+  color: white;
+  background-color: black;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+#uploadFile {
+  display: none;
+}
+
 .childrenBtn {
   margin: 8px;
 }
@@ -54,7 +73,7 @@
   display: flex;
   font-size: 16px;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
   margin-top: 4px;
 }
 
@@ -65,24 +84,16 @@
   display: flex;
 }
 
-.uploadLabel {
-  color: white;
-  background-color: black;
-  width: 40px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#uploadFile {
-  display: none;
-}
-
 .uploadBtn {
   width: 40px;
   margin-left: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.childImg {
+  width: 200px;
+  height: 200px;
+  margin-left: 20px;
 }

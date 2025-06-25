@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { uploadData } from 'aws-amplify/storage'
+import { uploadData, list, remove } from 'aws-amplify/storage'
+import {StorageImage} from '@aws-amplify/ui-react-storage'
 import "./App.css"
 
 const client = generateClient<Schema>();
@@ -13,6 +14,8 @@ function App() {
   const [text, setText] = useState("")
   const [date, setDate] = useState("");
   const [file, setFile] = useState<File | undefined>();
+  const [fetchedFiles, setFetchedFiles] = useState<any[]>([]);
+  const [seed, setSeed] = useState(1);
   const { user, signOut } = useAuthenticator();
   
   
@@ -24,6 +27,8 @@ function App() {
     client.models.Children.observeQuery().subscribe({
       next: (data) => setChildren([...data.items]),
     });
+
+    fetchFiles();
   }, []);
   
 
@@ -58,22 +63,47 @@ function App() {
     };
   }
   
-  const handleClick = () => {
+  const handleClick = async(id: string) => {
     if (!file) {
       return;
     }
     uploadData({
-      path: `photos/${file.name}`,
+      path: `photos/${id}`,
       data: file,
     });
+
+    fetchFiles();
   };
 
+  const fetchFiles = async () => {
+    const result = await list({
+      path: 'photos/',
+    });
+    setFetchedFiles(result.items);
+  };
+
+  const removeImg = async(id: string) => {
+    try {
+      await remove({
+        path: `photos/${id}`
+      })
+    } catch (error) {
+      console.log('Error', error);
+    }
+    fetchFiles()
+  }
+  
   return (
     <main>
       <h1>{user?.signInDetails?.loginId}'s todos</h1>
       <input type="text" placeholder="todo" value={text} onChange={handleChangeText}/>
       <input type="text" placeholder="yyyy-MM-DD" value={date} onChange={handleChangeDate}/>
       <button onClick={createTodo}>add</button>
+      <div className="uploadImg">
+        <label htmlFor="uploadFile" className="uploadLabel">Img</label>
+        <input type="file" id="uploadFile" onChange={handleChangeFile} />
+        <span className="fileName">{file?.name}</span>
+      </div>
       <div>
         {todos.map((todo) => (
           <div key={todo.id}>
@@ -87,12 +117,23 @@ function App() {
                   <input type="checkbox" onChange={() => deleteChild(child.id)} />
                   <span>{child.content}  by {child.deadline}</span>
                 </div>
-                <div className="uploader">
-                  <label htmlFor="uploadFile" className="uploadLabel">Img</label>
-                  <input type="file" id="uploadFile" onChange={handleChangeFile} />
-                  <button className="uploadBtn" onClick={handleClick}>Up</button>
-                </div>
-            </div>
+                {
+                fetchedFiles.length !== 0
+                ?
+                  fetchedFiles.map((item) => (
+                    item.path === `photos/${child.id}` 
+                    ? <div className="childImg" key={item.path} onClick={() => removeImg(child.id)}>
+                        <StorageImage alt="child-img" path={`photos/${child.id}`}/>
+                      </div>
+                    : <div key={child.id} className="uploader">
+                        <button className="uploadBtn" onClick={() => handleClick(child.id)}>Up</button>
+                      </div>))
+                : 
+                  <div className="uploader">
+                    <button className="uploadBtn" onClick={() => handleClick(child.id)}>Up</button>
+                  </div>
+                }
+              </div>
             : ""
             ))}
           </div>
