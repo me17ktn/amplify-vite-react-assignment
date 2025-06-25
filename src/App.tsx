@@ -18,6 +18,10 @@ function App() {
     client.models.Todo.observeQuery().subscribe({
       next: (data) => setTodos([...data.items]),
     });
+
+    client.models.Children.observeQuery().subscribe({
+      next: (data) => setChildren([...data.items]),
+    });
   }, []);
   
 
