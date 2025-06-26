@@ -37,8 +37,6 @@ function App() {
   useEffect(() => {
     for(let i = 0; i < children.length; i++) {
       toggle[i] = 0; 
-      console.log(toggle[i]);
-      
     }
   }, [])
 
