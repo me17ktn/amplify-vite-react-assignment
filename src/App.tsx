@@ -136,14 +136,14 @@ function App() {
         {todos.map((todo) => (
           <div key={todo.id}>
             <input type="checkbox" onChange={() => deleteTodo(todo.id)} />
-            <span className="todoText">{todo.content}  by {todo?.deadline}</span>
+            <span className="todoText">{todo.content}  by {todo.deadline}</span>
             <button className="childrenBtn" onClick={() => createChild(todo.id)}>+ child task</button>
             {children.map((child) => (
               child.todoId === todo.id ?
               <div key={child.id} className="children">
                 <div>
                   <input type="checkbox" onChange={() => deleteChild(child.id)} />
-                  <span>{child.content}  by {child?.deadline}</span>
+                  <span>{child.content}  by {child.deadline}</span>
                 </div>
                 {
                 fetchedFiles.length !== 0

@@ -35,7 +35,8 @@ const schema = a.schema({
     a.customType({
       content: a.string(),
       deadline: a.string(),
-      children: a.string().array()
+      children: a.string().array(),
+      childrenDeadline: a.string().array()
     })
   )
   .authorization((allow) => allow.authenticated()),
