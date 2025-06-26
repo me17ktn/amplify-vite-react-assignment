@@ -150,9 +150,10 @@ function App() {
       <input type="text" placeholder="yyyy-MM-DD" value={date} onChange={handleChangeDate}/>
       <button onClick={createTodo}>add</button>
       <div className="uploadImg">
-        <label htmlFor="uploadFile" className="uploadLabel">Input Img</label>
+        <label htmlFor="uploadFile" className="uploadLabel">Img</label>
         <input type="file" id="uploadFile" onChange={handleChangeFile} />
         <span className="fileName">{file?.name}</span>
+        <span className="note">Press "Img" to upload image before pressing "Up Img".</span>
         <span className="note">Refresh this page after pressing "Up" button.</span>
       </div>
       <div>
