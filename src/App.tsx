@@ -99,8 +99,6 @@ function App() {
     generateTodo({ description });
   };
   
-  console.log(data);
-  
   return (
     <main className="main">
       <h1>{user?.signInDetails?.loginId}'s todos</h1>
