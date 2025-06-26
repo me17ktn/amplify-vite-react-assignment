@@ -19,7 +19,8 @@ function App() {
   const [description, setDescription] = useState("");
   const { user, signOut } = useAuthenticator();
   const [{ data, isLoading }, generateTodo] = useAIGeneration("generateTodo");
-  
+
+  let toggle: number[] = []
   
   useEffect(() => {
     client.models.Todo.observeQuery().subscribe({
@@ -33,6 +34,13 @@ function App() {
     fetchFiles();
   }, []);
   
+  useEffect(() => {
+    for(let i = 0; i < children.length; i++) {
+      toggle[i] = 0; 
+      console.log(toggle[i]);
+      
+    }
+  }, [])
 
   function createTodo() {
     client.models.Todo.create({ content: text, deadline: date });
@@ -162,7 +170,7 @@ function App() {
             <input type="checkbox" onChange={() => deleteTodo(todo.id)} />
             <span className="todoText">{todo.content}  by {todo.deadline}</span>
             <button className="childrenBtn" onClick={() => createChild(todo.id)}>+ child task</button>
-            {children.map((child) => (
+            {children.map((child, index) => (
               child.todoId === todo.id ?
               <div key={child.id} className="children">
                 <div>
@@ -170,20 +178,24 @@ function App() {
                   <span>{child.content}  by {child.deadline}</span>
                 </div>
                 {
-                fetchedFiles.length !== 0
-                ?
+                // fetchedFiles.length !== 0
+                // ?
                   fetchedFiles.map((item) => (
-                    item.path === `photos/${child.id}` 
-                    ? <div className="childImg" key={item.path} onClick={() => removeImg(child.id)}>
+                    item.path === `photos/${child.id}` ? <span className="toggle">{toggle[index] = 1}</span> : null
+                  ))}
+                  
+                  {toggle[index] > 0
+                      ? <div className="childImg" onClick={() => removeImg(child.id)}>
                         <StorageImage alt="child-img" path={`photos/${child.id}`}/>
                       </div>
-                    : <div key={child.id} className="uploader">
+                      : 
+                      <div className="uploader">
                         <button className="uploadBtn" onClick={() => handleClick(child.id)}>Up Img</button>
-                      </div>))
-                : 
-                  <div className="uploader">
-                    <button className="uploadBtn" onClick={() => handleClick(child.id)}>Up Img</button>
-                  </div>
+                      </div>
+                // :
+                //   <div className="uploader">
+                //     <button className="uploadBtn" onClick={() => handleClick(child.id)}>Up Img</button>
+                //   </div>
                 }
               </div>
             : ""

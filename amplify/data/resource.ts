@@ -11,6 +11,7 @@ const schema = a.schema({
     .model({
       content: a.string(),
       deadline: a.date(),
+      hasImg: a.boolean(),
       todoId: a.id(),
       todo: a.belongsTo('Todo', 'todoId'),
   }).authorization((allow) => [allow.owner()]),
