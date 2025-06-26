@@ -26,7 +26,7 @@ const schema = a.schema({
       
   generateTodo: a.generation({
     aiModel: a.ai.model('Claude 3 Haiku'),
-    systemPrompt: 'You are a helpful assistant that generates Todos.',
+    systemPrompt: 'You are a helpful assistant that generates Todos and its Cihldren. When users ask you to generate a Todo. you generate a Todo, deadline, and some children that is reqired to achieve the Todo. Deadline must be string in the format of "yyyy-MM-DD". If users dont refer to deadline, you set it next week from today.',
   })
   .arguments({
     description: a.string(),
@@ -34,7 +34,9 @@ const schema = a.schema({
   .returns(
     a.customType({
       content: a.string(),
-      deadline: a.date(),
+      deadline: a.string(),
+      children: a.string().array(),
+      childrenDeadline: a.string().array()
     })
   )
   .authorization((allow) => allow.authenticated()),
