@@ -34,7 +34,7 @@ const schema = a.schema({
   .returns(
     a.customType({
       content: a.string(),
-      deadline: a.string(),
+      deadline: a.date(),
     })
   )
   .authorization((allow) => allow.authenticated()),
