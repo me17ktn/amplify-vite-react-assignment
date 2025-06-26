@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { Button, Flex, Loader, Text, TextAreaField, useAuthenticator, View } from '@aws-amplify/ui-react';
+import { Button, Flex, Loader, Text, TextAreaField, useAuthenticator } from '@aws-amplify/ui-react';
 import { uploadData, list, remove } from 'aws-amplify/storage'
 import {StorageImage} from '@aws-amplify/ui-react-storage'
 import { useAIGeneration } from "./client";
@@ -18,8 +18,7 @@ function App() {
   const [fetchedFiles, setFetchedFiles] = useState<any[]>([]);
   const [description, setDescription] = useState("");
   const { user, signOut } = useAuthenticator();
-  const [{ data, isLoading }, generateTodo] =
-    useAIGeneration("generateTodo");
+  const [{ data, isLoading }, generateTodo] = useAIGeneration("generateTodo");
   
   
   useEffect(() => {
@@ -100,8 +99,11 @@ function App() {
     generateTodo({ description });
   };
   
+  console.log(data);
+  
   return (
-    <main>
+    <main className="main">
+      <h1>{user?.signInDetails?.loginId}'s todos</h1>
       <Flex direction="column">
       <Flex direction="row">
         <TextAreaField
@@ -110,25 +112,17 @@ function App() {
           onChange={(e) => setDescription(e.target.value)}
           label="Description"
         />
-        <Button onClick={handleClickAi}>Generate recipe</Button>
+        <Button onClick={handleClickAi}>Generate Todo</Button>
       </Flex>
       {isLoading ? (
         <Loader variation="linear" />
       ) : (
         <>
-          <Text fontWeight="bold">{data?.name}</Text>
-          <View as="ul">
-            {data?.ingredients?.map((ingredient) => (
-              <View as="li" key={ingredient}>
-                {ingredient}
-              </View>
-            ))}
-          </View>
-          <Text>{data?.instructions}</Text>
+          <Text fontWeight="bold">{data?.content}</Text>
+          <Text>{data?.deadline}</Text>
         </>
       )}
     </Flex>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
       <input type="text" placeholder="todo" value={text} onChange={handleChangeText}/>
       <input type="text" placeholder="yyyy-MM-DD" value={date} onChange={handleChangeDate}/>
       <button onClick={createTodo}>add</button>

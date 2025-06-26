@@ -41,6 +41,10 @@
   color: #888;
 }
 
+.main {
+  margin-top: 400px;
+}
+
 .todoText {
   margin-left: 4px;
   font-size: 24px;

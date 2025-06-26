@@ -25,17 +25,16 @@ const schema = a.schema({
 
       
   generateTodo: a.generation({
-    aiModel: a.ai.model('Claude 3.5 Sonnet'),
-    systemPrompt: 'You are a helpful assistant that generates recipes.',
+    aiModel: a.ai.model('Claude 3.5 Haiku'),
+    systemPrompt: 'You are a helpful assistant that generates Todos.',
   })
   .arguments({
     description: a.string(),
   })
   .returns(
     a.customType({
-      name: a.string(),
-      ingredients: a.string().array(),
-      instructions: a.string(),
+      content: a.string(),
+      deadline: a.date(),
     })
   )
   .authorization((allow) => allow.authenticated()),
