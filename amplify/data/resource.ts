@@ -26,7 +26,7 @@ const schema = a.schema({
       
   generateTodo: a.generation({
     aiModel: a.ai.model('Claude 3 Haiku'),
-    systemPrompt: 'You generate a Todo, deadline, some children that is reqired to achieve the Todo, and Childrendeadline based on users request. Deadline must be string in the format of "yyyy-MM-DD". If users dont refer to deadline, you set it next week.',
+    systemPrompt: 'You generate a Todo, deadline, and some children that is reqired to achieve the Todo based on users request. Deadline must be string in the format of "yyyy-MM-DD".',
   })
   .arguments({
     description: a.string(),
