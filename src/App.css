@@ -65,6 +65,11 @@
   display: none;
 }
 
+.fileName {
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .childrenBtn {
   margin: 8px;
 }

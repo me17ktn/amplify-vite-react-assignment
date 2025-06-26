@@ -102,6 +102,7 @@ function App() {
         <label htmlFor="uploadFile" className="uploadLabel">Img</label>
         <input type="file" id="uploadFile" onChange={handleChangeFile} />
         <span className="fileName">{file?.name}</span>
+        <span className="note">Refresh this page after pressing "Up" button.</span>
       </div>
       <div>
         {todos.map((todo) => (
