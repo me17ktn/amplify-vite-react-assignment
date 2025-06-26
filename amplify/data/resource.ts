@@ -1,4 +1,4 @@
-import { type ClientSchema, defineFunction, a, defineData } from "@aws-amplify/backend";
+import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -6,7 +6,6 @@ adding a new "isDone" field as a boolean. The authorization rule below
 specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
-
 const schema = a.schema({
   Children: a
     .model({
@@ -27,7 +26,7 @@ const schema = a.schema({
       
   generateTodo: a.generation({
     aiModel: a.ai.model('Claude 3.5 Sonnet'),
-    systemPrompt: 'You are a helpful assistant that generates a task with many small tasks. When Users asked you to add new Todo, you generate a Todo and its Children to achieve the task.',
+    systemPrompt: 'You are a helpful assistant that generates recipes.',
   })
   .arguments({
     description: a.string(),
@@ -35,6 +34,8 @@ const schema = a.schema({
   .returns(
     a.customType({
       name: a.string(),
+      ingredients: a.string().array(),
+      instructions: a.string(),
     })
   )
   .authorization((allow) => allow.authenticated()),
