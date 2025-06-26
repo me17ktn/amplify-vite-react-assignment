@@ -129,7 +129,7 @@ function App() {
       {isLoading ? (
         <Loader variation="linear" />
       ) : (
-        <>
+        <div>
           <Text fontWeight="bold">{data?.content}</Text>
           <View as="ul">
             {data?.children?.map((child) => (
@@ -139,7 +139,7 @@ function App() {
             ))}
           </View>
           <Text>{data?.deadline}</Text>
-        </>
+        </div>
       )}
     </Flex>
     <div>
