@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { Button, Flex, Loader, Text, TextAreaField, useAuthenticator, View } from '@aws-amplify/ui-react';
+import { Button, Flex, Loader, Text, TextAreaField, useAuthenticator } from '@aws-amplify/ui-react';
 import { uploadData, list, remove } from 'aws-amplify/storage'
 import {StorageImage} from '@aws-amplify/ui-react-storage'
 import { useAIGeneration } from "./client";
@@ -131,13 +131,13 @@ function App() {
       ) : (
         <div>
           <Text fontWeight="bold">{data?.content}</Text>
-          <View as="ul">
+          <ul>
             {data?.children?.map((child) => (
-              <View as="li" key={child}>
+              <li key={child}>
                 {child}
-              </View>
+              </li>
             ))}
-          </View>
+          </ul>
           <Text>{data?.deadline}</Text>
         </div>
       )}

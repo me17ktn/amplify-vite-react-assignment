@@ -26,7 +26,7 @@ const schema = a.schema({
       
   generateTodo: a.generation({
     aiModel: a.ai.model('Claude 3 Haiku'),
-    systemPrompt: 'You are a helpful assistant that generates Todos.',
+    systemPrompt: 'You are a helpful assistant that generates Todos. You must generate deadline inthe format of yyyy-MM-DD with it.',
   })
   .arguments({
     description: a.string(),
